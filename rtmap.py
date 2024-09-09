@@ -55,7 +55,7 @@ def create_point_layer(csv_file):
             fill=True,
             fill_color=color,
             fill_opacity=0.7,
-            popup=popup_info
+            popup=folium.Popup(popup_info, max_width=None)
         ).add_to(layer)
 
     return layer
