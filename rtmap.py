@@ -5,6 +5,7 @@ import folium
 import matplotlib.colors as mcolors
 from folium.plugins import MeasureControl
 from folium.plugins import Fullscreen
+from folium.plugins import MousePosition
 
 def create_point_layer(csv_file):
 
@@ -74,6 +75,13 @@ def create_map_with_layers(csv_files, output_file):
     # Add full Screen option to zoom control
     fullscreen = Fullscreen()
     m.add_child(fullscreen)
+
+    # Show long/lat mouse coordinates in lower right corner
+    mouse_position = MousePosition(
+        position="bottomright",
+        separator=" | "
+    )
+    m.add_child(mouse_position)
 
     # Map layers
     folium.TileLayer(
