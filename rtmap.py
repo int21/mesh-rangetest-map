@@ -4,6 +4,7 @@ import pandas as pd
 import folium
 import matplotlib.colors as mcolors
 from folium.plugins import MeasureControl
+from folium.plugins import Fullscreen
 
 def create_point_layer(csv_file):
 
@@ -69,6 +70,10 @@ def create_map_with_layers(csv_files, output_file):
         secondary_area_unit=None,
         tertiary_area_unit=None
     ))
+
+    # Add full Screen option to zoom control
+    fullscreen = Fullscreen()
+    m.add_child(fullscreen)
 
     # Map layers
     folium.TileLayer(
