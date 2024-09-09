@@ -128,7 +128,7 @@ def create_map_with_layers(csv_files, output_file):
         if layer:
             layer.add_to(m)
 
-    folium.LayerControl(collapsed=False).add_to(m)
+    folium.LayerControl(collapsed=True).add_to(m)
     m.save(output_file)
 
 
