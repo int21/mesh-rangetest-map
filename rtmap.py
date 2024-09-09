@@ -6,6 +6,7 @@ import matplotlib.colors as mcolors
 from folium.plugins import MeasureControl
 from folium.plugins import Fullscreen
 from folium.plugins import MousePosition
+from folium.plugins import HeatMap
 
 def create_point_layer(csv_file):
 
@@ -65,6 +66,21 @@ def create_map_with_layers(csv_files, output_file):
     initial_df = pd.read_csv(csv_files[0])
     initial_map_center = [initial_df['rx lat'].mean(), initial_df['rx long'].mean()]
     m = folium.Map(location=initial_map_center, zoom_start=13, tiles="OpenStreetMap", control_scale=True)
+
+    # Create a merged CSV file to use for calculating heatmaps etc
+    df_list = []
+    for file in csv_files:
+        df = pd.read_csv(file)
+        df_list.append(df)
+    merged_df = pd.concat(df_list, ignore_index=True)
+
+    # Prepare data for a heatmap
+    heat_data = [[row['rx lat'], row['rx long'], row['rx snr']] for index, row in merged_df.iterrows()]
+
+    # Add the heatmap layer
+    heatmap_layer = folium.FeatureGroup(name='Measurement Heatmap', show=False)
+    HeatMap(heat_data).add_to(heatmap_layer)
+    heatmap_layer.add_to(m)
 
     # Measure Tool
     m.add_child(MeasureControl(
