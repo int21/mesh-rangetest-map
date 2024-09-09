@@ -34,8 +34,8 @@ def create_point_layer(csv_file):
     # Add a marker for each point
     for _, row in df_filtered.iterrows():
         # Set color based on SNR
-        if row['rx snr'] > 15:
-            color = '#808080'  # Grey for SNR > 15
+        if row['rx snr'] > 15 or row['rx snr'] <= -25:
+            color = '#808080'  # Grey for SNR > 15 or <= -25
         else:
             color = mcolors.rgb2hex(cmap(row['normalized_snr']))
 
